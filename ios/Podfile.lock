@@ -1,0 +1,29 @@
+PODS:
+  - Flutter (1.0.0)
+  - veriff_flutter (0.0.1):
+    - Flutter
+    - VeriffSDK (= 6.1.0)
+  - VeriffSDK (6.1.0)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - veriff_flutter (from `.symlinks/plugins/veriff_flutter/ios`)
+
+SPEC REPOS:
+  trunk:
+    - VeriffSDK
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  veriff_flutter:
+    :path: ".symlinks/plugins/veriff_flutter/ios"
+
+SPEC CHECKSUMS:
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  veriff_flutter: 8938ae8cd080f7ae4766a6ea9050c702a8bb9d7c
+  VeriffSDK: c256788f8e32a5a9c8ad3b04fc0320a0e9753029
+
+PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
+
+COCOAPODS: 1.11.3

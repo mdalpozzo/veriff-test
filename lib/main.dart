@@ -1,14 +1,17 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:veriff_flutter/veriff_flutter.dart';
 
-void main() => runApp(PassbaseFlutterDemoApp());
+import 'package:http/http.dart' as http;
 
-class PassbaseFlutterDemoApp extends StatelessWidget {
+void main() => runApp(VeriffFlutterDemoApp());
+
+class VeriffFlutterDemoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // PassbaseSDK.initialize(
-    //     publishableApiKey:
-    //         "N45LCEcSc2DYazpaoU921VHB960pEdM7qqDhdT0OqIJU4gm6AzNfdlDWc9CW0EGC");
-
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -36,27 +39,51 @@ class _VeriffDemoHomePageState extends State<VeriffDemoHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('HELLO'),
-//             PassbaseButton(
-//               onFinish: (identityAccessKey) {
-// // do stuff in case of success
-//                 print(identityAccessKey);
-//               },
-//               onSubmitted: (identityAccessKey) {
-// // do stuff in case of success
-//                 print(identityAccessKey);
-//               },
-//               onError: (errorCode) {
-// // do stuff in case of cancel
-//                 print(errorCode);
-//               },
-//               onStart: () {
-// // do stuff in case of start
-//                 print("start");
-//               },
-//               width: 300,
-//               height: 70,
-//             ),
+            ElevatedButton(
+                onPressed: () async {
+                  // fetch session token
+                  http.Response response = await http.post(
+                    Uri.parse('https://stationapi.veriff.com/v1/sessions'),
+                    headers: <String, String>{
+                      'X-AUTH-CLIENT': '2522be5e-9c64-4457-b6a7-88183b084595'
+                    },
+                    body: jsonEncode({
+                      "verification": {
+                        "callback": "https://veriff.me",
+                        "person": {
+                          "firstName": "Marlin",
+                          "lastName": "Dalpozzo",
+                          "dateOfBirth": "1988-06-21",
+                          "gender": "M"
+                        },
+                        "document": {
+                          "type": "DRIVERS_LICENSE",
+                          "country": "US"
+                        },
+                        "vendorData": "App test"
+                      }
+                    }),
+                  );
+
+                  Map<String, dynamic> bodyDecoded = json.decode(response.body);
+
+                  String sessionToken =
+                      bodyDecoded['verification']['sessionToken'];
+
+                  Configuration config = Configuration(sessionToken);
+
+                  Veriff veriff = Veriff();
+
+                  try {
+                    Result result = await veriff.start(config);
+                    print(result.status);
+                    print(result.error);
+                  } on PlatformException catch (err) {
+                    // handle exception
+                    print('PlatformException: ${err.toString()}');
+                  }
+                },
+                child: const Text('Start Veriff Process'))
           ],
         ),
       ),
