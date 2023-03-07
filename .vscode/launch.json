@@ -10,6 +10,14 @@
             "type": "dart"
         },
         {
+            "name": "veriff_poc - verbose",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "-v"
+            ]
+        },
+        {
             "name": "veriff_poc (profile mode)",
             "request": "launch",
             "type": "dart",
