@@ -60,17 +60,34 @@ class _VeriffDemoHomePageState extends State<VeriffDemoHomePage> {
                           "type": "DRIVERS_LICENSE",
                           "country": "US"
                         },
-                        "vendorData": "App test"
+                        "vendorData": "123456789"
                       }
                     }),
                   );
 
                   Map<String, dynamic> bodyDecoded = json.decode(response.body);
 
-                  String sessionToken =
-                      bodyDecoded['verification']['sessionToken'];
+                  String sessionUrl = bodyDecoded['verification']['url'];
 
-                  Configuration config = Configuration(sessionToken);
+                  // https://developers.veriff.com/images/Veriff-SDK-Customization.pdf
+                  Branding branding = Branding(
+                    logo: AssetImage('assets/images/logo_white.png'),
+                    background: '#00ff00',
+                    onBackground: '#ff00ff',
+                    // onBackgroundSecondary: "#00ff00",
+                    // onBackgroundTertiary: "#ff00ff",
+                    primary: '#ff7700',
+                    onPrimary: '#ffffff',
+                    // secondary: '#${Values.COLOR_FOREST.value.toRadixString(16)}',
+                    // onSecondary: "#ff7700",
+                    // outline: "#ff00ff",
+                    error: '#ff0000',
+                    success: "#00ff00",
+                    buttonRadius: 32,
+                    // fonts: fonts,
+                  );
+
+                  Configuration config = Configuration(sessionUrl, branding: branding);
 
                   Veriff veriff = Veriff();
 
