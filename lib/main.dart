@@ -71,7 +71,7 @@ class _VeriffDemoHomePageState extends State<VeriffDemoHomePage> {
 
                   // https://developers.veriff.com/images/Veriff-SDK-Customization.pdf
                   Branding branding = Branding(
-                    logo: AssetImage('assets/images/logo_white.png'),
+                    logo: AssetImage('assets/images/app_icon.png'),
                     background: '#00ff00',
                     onBackground: '#ff00ff',
                     // onBackgroundSecondary: "#00ff00",
